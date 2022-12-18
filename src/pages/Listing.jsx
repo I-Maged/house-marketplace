@@ -4,6 +4,12 @@ import { getDoc, doc } from 'firebase/firestore';
 import { getAuth } from 'firebase/auth';
 import { db } from '../firebase.config';
 import { MapContainer, Marker, Popup, TileLayer } from 'react-leaflet';
+import { Navigation, Pagination, Scrollbar, A11y } from 'swiper';
+import { Swiper, SwiperSlide } from 'swiper/react';
+import 'swiper/css';
+import 'swiper/css/navigation';
+import 'swiper/css/pagination';
+import 'swiper/css/scrollbar';
 import Spinner from '../components/Spinner';
 import shareIcon from '../assets/svg/shareIcon.svg';
 
@@ -35,6 +41,26 @@ function Listing() {
 
   return (
     <main>
+      <Swiper
+        style={{ height: '250px' }}
+        modules={[Navigation, Pagination, Scrollbar, A11y]}
+        slidesPerView={1}
+        navigation
+        pagination={{ clickable: true }}
+        scrollbar={{ draggable: true }}
+      >
+        {listing.imgUrls.map((url, index) => (
+          <SwiperSlide key={index}>
+            <div
+              style={{
+                background: `url(${listing.imgUrls[index]}) center no-repeat`,
+                backgroundSize: 'cover',
+              }}
+              className='swiperSlideDiv'
+            ></div>
+          </SwiperSlide>
+        ))}
+      </Swiper>
       <div
         className='shareIconDiv'
         onClick={() => {
